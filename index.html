@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Glow Protocol">
+<meta name="theme-color" content="#5bb8e8">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Glow Protocol">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"><title>✨ Glow Protocol</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+button,input,textarea,select{font-family:inherit;-webkit-appearance:none;appearance:none}
+:root{
+  --accent:#2e8bc0;--accent2:#48a9d4;--accent-dim:#1a5a7a;
+  --teal:#0d9488;--slate:#64748b;--steel:#b8d4e8;
+  --am:#2e8bc0;--pm:#1e3a5f;--pm-tx:#48a9d4;--week:#0d9488;--psori:#e05a6a;
+}
+[data-theme="dark"]{
+  --bg:#080e14;--bg2:#0d1720;--bg3:#111e2a;
+  --tx:#e2eef7;--tx2:#8aafc8;--tx3:#3d6480;
+  --bd:rgba(46,139,192,.15);--bd2:rgba(46,139,192,.07);
+  --card:#0d1720;--nav:#080e14;
+}
+[data-theme="light"]{
+  --bg:#f0f7fc;--bg2:#ffffff;--bg3:#e2f0f8;
+  --tx:#0d2035;--tx2:#2a5070;--tx3:#7aa8c4;
+  --bd:rgba(46,139,192,.18);--bd2:rgba(46,139,192,.09);
+  --card:#ffffff;--nav:#f0f7fc;
+}
+html,body{background:var(--bg);color:var(--tx);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh}
+body{padding-bottom:4rem}
+
+/* HEADER */
+.hdr{padding:1rem 1rem .75rem;display:flex;justify-content:space-between;align-items:center;border-bottom:.5px solid var(--bd)}
+.hdr-left{display:flex;align-items:center;gap:.6rem}
+.app-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1a1510,#2a2018);border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hdr-title{font-size:16px;font-weight:400;color:var(--accent);letter-spacing:-.2px;font-family:'DM Serif Display',serif}
+.hdr-sub{font-size:10px;color:var(--tx3);margin-top:1px;letter-spacing:.03em}
+.theme-btn{background:var(--bg3);border:1px solid var(--bd);border-radius:20px;padding:5px 11px;font-size:12px;cursor:pointer;color:var(--tx2)}
+
+/* NAV */
+.nav-wrap{position:sticky;top:0;z-index:100;border-bottom:1.5px solid;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:.1rem 0}
+.nav-dark{background:#070f18;border-bottom-color:#1a3050}
+.nav-light{background:#e0f0f8;border-bottom-color:#7ab8d8}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-inner{display:flex;gap:4px;padding:.45rem .75rem;width:max-content}
+.pill{font-size:12px;padding:7px 16px;border-radius:100px;cursor:pointer;white-space:nowrap;font-weight:500;transition:background .15s,color .15s,border-color .15s;font-family:'DM Sans',sans-serif;border:1.5px solid transparent}
+.pill.p-inactive-dark{background:#1e2d3d;color:#a8cce0;border-color:#2e4560}
+.pill.p-inactive-light{background:#ffffff;color:#1a3550;border-color:#7ab8d8}
+.pill.p-active-blue{background:#5bb8e8;color:#ffffff;border-color:#5bb8e8;font-weight:700}
+.pill.p-active-teal{background:#14b8a6;color:#ffffff;border-color:#14b8a6;font-weight:700}
+.pill.p-active-red{background:#f07080;color:#ffffff;border-color:#f07080;font-weight:700}
+
+/* SECTIONS */
+.sec{padding:.75rem 1rem 3rem;display:none}
+.sec.active{display:block}
+.sec-lbl{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.12em;padding:.8rem 0 .4rem;font-family:'DM Sans',sans-serif}
+
+/* CARDS */
+.card{background:var(--card);border:.5px solid var(--bd);border-radius:16px;padding:1rem 1.1rem;margin-bottom:.55rem;position:relative}
+.card-title{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:.25rem}
+.card-sub{font-size:12px;color:var(--tx2);line-height:1.6}
+.card-meta{font-size:11px;color:var(--tx3);margin-top:.35rem}
+
+/* ROUTINE HERO */
+.routine-hero{background:linear-gradient(145deg,#1a3a5c,#1e4a72);border:.5px solid rgba(91,184,232,.3);border-top:2px solid #5bb8e8;border-radius:22px;padding:1.5rem 1.2rem 1rem;margin-bottom:.75rem;text-align:center}
+.routine-hero-icon{font-size:48px;line-height:1;margin-bottom:.4rem}
+.routine-hero-title{font-size:22px;font-weight:400;letter-spacing:-.3px;font-family:'DM Serif Display',serif}
+.routine-hero-sub{font-size:12px;color:#a8d8f0;margin-top:.3rem;line-height:1.5}
+.music-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;border:none;text-decoration:none}
+.music-btn-am{background:linear-gradient(90deg,#1a6fa8,#2e8bc0);color:#fff}
+.music-btn-pm{background:linear-gradient(90deg,#4a5a9e,#7a8ec9);color:#fff}
+
+/* STEP CARDS */
+.step{background:var(--bg2);border:.5px solid var(--bd2);border-radius:14px;margin-bottom:.45rem;overflow:hidden;transition:border-color .15s}
+.step.done{border-color:var(--gold-dim)}
+.step-header{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;cursor:pointer}
+.step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;border:1.5px solid var(--bd);color:var(--tx3);transition:all .15s}
+.step.done .step-num{background:var(--gold);border-color:var(--accent);color:#0f0c09}
+.step-info{flex:1;min-width:0}
+.step-name{font-size:13.5px;font-weight:600;color:var(--tx)}
+.step.done .step-name{color:var(--tx2);text-decoration:line-through;text-decoration-color:var(--gold-dim)}
+.step-hint{font-size:11px;color:var(--tx3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step-ph{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--accent);flex-shrink:0}
+.step-chevron{font-size:12px;color:var(--tx3);flex-shrink:0;transition:transform .2s}
+.step.open .step-chevron{transform:rotate(180deg)}
+.step-body{display:none;padding:0 1rem .85rem 1rem;border-top:.5px solid var(--bd2)}
+.step.open .step-body{display:block}
+.step-body p{font-size:12px;color:var(--tx2);line-height:1.65;margin-top:.6rem}
+.step-body .warn{color:#c97a5a;font-size:11.5px;margin-top:.5rem;font-weight:500}
+.step-body .keys{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.55rem}
+.step-body .key{font-size:10.5px;padding:3px 9px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--tx2)}
+.reset-btn{width:100%;padding:.65rem;border-radius:12px;background:var(--bg3);border:1px solid var(--bd);color:var(--tx3);font-size:12px;cursor:pointer;margin-top:.75rem}
+
+/* WEEKLY */
+.week-tab{display:flex;gap:.4rem;margin-bottom:.75rem}
+.week-pill{flex:1;padding:.55rem;border-radius:10px;border:1px solid var(--bd);background:var(--bg3);font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;text-align:center;transition:all .15s}
+.week-pill.active{background:var(--jade);border-color:var(--accent2);color:#fff}
+
+/* PSORIASIS */
+.flare-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.65rem}
+.flare-btn{background:var(--bg2);border:1.5px solid var(--bd);border-radius:14px;padding:.85rem;cursor:pointer;text-align:left;transition:all .15s}
+.flare-btn.active{border-color:var(--psori);background:rgba(201,122,90,.08)}
+.flare-emoji{font-size:22px;margin-bottom:.3rem}
+.flare-title{font-size:13px;font-weight:600;color:var(--tx)}
+.flare-sub{font-size:11px;color:var(--tx3);margin-top:2px}
+.log-entry{background:var(--bg2);border:.5px solid var(--bd2);border-radius:12px;padding:.7rem .9rem;margin-bottom:.4rem;display:flex;justify-content:space-between;align-items:center}
+.log-date{font-size:11px;color:var(--tx3)}
+.log-status{font-size:12px;color:var(--tx2);font-weight:500}
+
+/* PRODUCTS */
+.prod-card{background:var(--bg2);border:.5px solid var(--bd);border-radius:16px;margin-bottom:.5rem;overflow:hidden}
+.prod-header{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;cursor:pointer}
+.prod-emoji{font-size:22px;flex-shrink:0}
+.prod-info{flex:1}
+.prod-name{font-size:13.5px;font-weight:600;color:var(--tx)}
+.prod-sub{font-size:11px;color:var(--tx3);margin-top:1px}
+.prod-ph-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--accent);flex-shrink:0}
+.prod-chevron{font-size:12px;color:var(--tx3);transition:transform .2s}
+.prod-card.open .prod-chevron{transform:rotate(180deg)}
+.prod-body{display:none;padding:.1rem 1rem .9rem;border-top:.5px solid var(--bd2)}
+.prod-card.open .prod-body{display:block}
+.prod-body p{font-size:12px;color:var(--tx2);line-height:1.65;margin-top:.55rem}
+.prod-body .warn{color:#c97a5a;font-size:11.5px;font-weight:500;margin-top:.45rem}
+.prod-body .inci{font-size:10px;color:var(--tx3);line-height:1.6;margin-top:.5rem;padding:.5rem .7rem;background:var(--bg3);border-radius:8px;border:.5px solid var(--bd2)}
+.ing-grid{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem}
+.ing-tag{font-size:10.5px;padding:3px 9px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--accent)}
+
+/* BUY */
+.buy-card{background:var(--bg2);border:.5px solid var(--bd);border-radius:14px;padding:.9rem 1rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem}
+.buy-check{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--bd);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s}
+.buy-card.done .buy-check{background:var(--jade);border-color:var(--accent2)}
+.buy-info{flex:1}
+.buy-name{font-size:13px;font-weight:600;color:var(--tx)}
+.buy-card.done .buy-name{text-decoration:line-through;color:var(--tx3)}
+.buy-sub{font-size:11px;color:var(--tx3);margin-top:2px}
+.buy-link{font-size:11px;color:var(--accent);text-decoration:none;font-weight:600;flex-shrink:0}
+
+/* DR KIM */
+.dr-card{background:linear-gradient(145deg,#080e18,#0d1a2e);border:.5px solid rgba(46,139,192,.25);border-radius:20px;padding:1.4rem 1.2rem;margin-bottom:.65rem;text-align:center}
+.dr-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1a2e45,#1e3a58);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto .75rem}
+.dr-name{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.3px}
+.dr-cred{font-size:12px;color:var(--accent2);margin-top:.2rem;font-weight:600}
+.dr-practice{font-size:13px;color:var(--tx2);margin-top:.5rem}
+.dr-addr{font-size:12px;color:var(--tx3);margin-top:.25rem;line-height:1.5}
+.dr-hours{font-size:11px;color:var(--tx3);margin-top:.4rem}
+.dr-actions{display:flex;gap:.5rem;margin-top:1rem;justify-content:center}
+.dr-btn{display:flex;align-items:center;gap:.4rem;padding:.65rem 1.2rem;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:opacity .15s}
+.dr-btn:active{opacity:.75}
+.dr-call{background:var(--jade);color:#fff}
+.dr-email{background:var(--bg3);border:1px solid var(--bd);color:var(--tx2)}
+.dr-note{background:var(--bg2);border:.5px solid var(--bd);border-radius:14px;padding:.85rem 1rem;margin-top:.65rem}
+.dr-note-lbl{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.dr-note textarea{width:100%;background:transparent;border:none;color:var(--tx);font-size:12.5px;line-height:1.6;resize:none;outline:none;min-height:80px}
+.dr-info-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:.5px solid var(--bd2);font-size:12px}
+.dr-info-row:last-child{border-bottom:none}
+.dr-info-lbl{color:var(--tx3)}
+.dr-info-val{color:var(--tx2);font-weight:500}
+
+/* SKIN LOG in psori */
+.log-input-row{display:flex;gap:.5rem;margin-bottom:.65rem}
+.log-input-row textarea{flex:1;background:var(--bg2);border:.5px solid var(--bd);border-radius:12px;color:var(--tx);font-size:12.5px;padding:.65rem .85rem;resize:none;outline:none;min-height:60px;line-height:1.5}
+.log-submit{background:var(--psori);border:none;border-radius:12px;color:#fff;font-size:12px;font-weight:600;padding:.65rem .9rem;cursor:pointer;flex-shrink:0;align-self:flex-end}
+
+/* MUSIC MODAL */
+.music-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:flex-end}
+.music-modal.open{display:flex}
+.music-sheet{background:var(--bg2);border-radius:24px 24px 0 0;border-top:.5px solid var(--bd);padding:1.25rem 1rem 2.5rem;width:100%;max-height:80vh;overflow-y:auto}
+.music-sheet-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:.2rem;text-align:center}
+.music-sheet-sub{font-size:11px;color:var(--tx3);text-align:center;margin-bottom:1rem}
+.music-close{display:block;width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto .9rem}
+.playlist-item{display:flex;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:.5px solid var(--bd2);text-decoration:none}
+.playlist-item:last-child{border-bottom:none}
+.playlist-num{font-size:12px;color:var(--tx3);width:18px;text-align:center;flex-shrink:0}
+.playlist-info{flex:1}
+.playlist-name{font-size:13px;font-weight:600;color:var(--tx)}
+.playlist-artist{font-size:11px;color:var(--tx3);margin-top:1px}
+.playlist-play{font-size:18px;flex-shrink:0}
+
+/* BUY RICH CARDS */
+.buy-rich-card{background:var(--bg2);border:1.5px solid var(--bd);border-radius:18px;padding:1.1rem 1rem 1rem;margin-bottom:.65rem;transition:border-color .2s;position:relative}
+.buy-rich-card.bought{opacity:.5}
+.buy-rich-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem}
+.buy-rich-check{width:26px;height:26px;border-radius:50%;border:2px solid var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;flex-shrink:0}
+.buy-rich-card.bought .buy-rich-check{background:#2e8bc0;border-color:#2e8bc0;color:#fff}
+.buy-rich-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;border:1px solid}
+.buy-rich-icon{font-size:36px;margin-bottom:.5rem}
+.buy-rich-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--tx);line-height:1.2;margin-bottom:.3rem}
+.buy-rich-detail{font-size:11px;color:var(--accent2);font-weight:600;margin-bottom:.5rem;letter-spacing:.02em}
+.buy-rich-desc{font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:.65rem}
+.buy-rich-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem}
+.buy-tag{font-size:10.5px;padding:3px 9px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--tx2)}
+.buy-rich-actions{display:flex;gap:.5rem}
+.buy-action-btn{font-size:12px;font-weight:600;padding:.55rem 1rem;border-radius:10px;text-decoration:none;transition:opacity .15s;font-family:'DM Sans',sans-serif}
+.buy-action-btn:active{opacity:.75}
+.buy-action-primary{background:#2e8bc0;color:#fff}
+.buy-action-sec{background:var(--bg3);border:1px solid var(--bd);color:var(--tx2)}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="app-icon" style="padding:0;overflow:hidden"><img src="data:image/png;base64,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" style="width:100%;height:100%;object-fit:cover;border-radius:10px"></div>
+    <div>
+      <div class="hdr-title">Glow Protocol</div>
+      <div class="hdr-sub">💧 CareCella · Face Protocol</div>
+    </div>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀️</button>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-inner" id="nav-inner">
+    <button class="pill" data-sec="sec-am" onclick="showSec('sec-am',this,'am')">🌊 Morning</button>
+    <button class="pill" data-sec="sec-pm" onclick="showSec('sec-pm',this,'pm')">🌃 Evening</button>
+    <button class="pill" data-sec="sec-week" onclick="showSec('sec-week',this,'week')">⚡ Weekly</button>
+    <button class="pill" data-sec="sec-psori" onclick="showSec('sec-psori',this,'psori')">🩺 Psoriasis</button>
+    <button class="pill" data-sec="sec-prod" onclick="showSec('sec-prod',this,'prod')">🧴 Products</button>
+    <button class="pill" data-sec="sec-buy" onclick="showSec('sec-buy',this,'buy')">🛒 Shop</button>
+    <button class="pill" data-sec="sec-dr" onclick="showSec('sec-dr',this,'dr')">🪷 Dr. Kim</button>
+  </div>
+</div>
+
+<!-- ☀️ MORNING -->
+<div class="sec active" id="sec-am">
+  <div class="routine-hero">
+    <div class="routine-hero-icon" style="font-family:Apple Color Emoji,Segoe UI Emoji,sans-serif">🌊</div>
+    <div class="routine-hero-title" style="color:#e8f4ff">Morning Protocol</div>
+    <div class="routine-hero-sub">10 steps · ~15 min · Cleanse · Treat · Protect</div>
+    <a class="music-btn music-btn-am" onclick="openMusic('am')" style="cursor:pointer">🎵 K-Pop Morning Mix</a>
+  </div>
+
+  <div class="sec-lbl">Your AM Routine</div>
+  <div id="am-steps"></div>
+  <button class="reset-btn" onclick="resetSteps('am')">↺ Reset Morning</button>
+</div>
+
+<!-- 🌙 EVENING -->
+<div class="sec" id="sec-pm">
+  <div class="routine-hero">
+    <div class="routine-hero-icon">🌃</div>
+    <div class="routine-hero-title" style="color:#e8f4ff">Evening Recovery</div>
+    <div class="routine-hero-sub">10 steps · ~20 min · Repair · Restore · Reset</div>
+    <a class="music-btn music-btn-pm" onclick="openMusic('pm')" style="cursor:pointer">🎵 Evening Wind-Down</a>
+  </div>
+
+  <div class="sec-lbl">Your PM Routine</div>
+  <div id="pm-steps"></div>
+  <button class="reset-btn" onclick="resetSteps('pm')">↺ Reset Evening</button>
+</div>
+
+<!-- 📅 WEEKLY -->
+<div class="sec" id="sec-week">
+  <div class="routine-hero" style="background:linear-gradient(145deg,#1a3a5c,#1e4a72)">
+    <div class="routine-hero-icon">📅</div>
+    <div class="routine-hero-title" style="color:var(--accent2)">Weekly Treatments</div>
+    <div class="routine-hero-sub">Scrub first · then Sheet Mask · 1–2x per week</div>
+  </div>
+
+  <div class="card" style="margin-bottom:.65rem;border-color:rgba(91,184,232,.2);border-top:2px solid #5bb8e8">
+    <div class="card-title">🧊 Refrigerate your mask before you start</div>
+    <div class="card-sub">Cold mask = cooling, soothing effect — especially good on psoriasis patches. Pop it in now before step 1.</div>
+  </div>
+  <div id="week-scrub">
+    <div class="sec-lbl">Scrub + Mask Protocol</div>
+    <div id="scrub-steps"></div>
+    <button class="reset-btn" onclick="resetSteps('scrub')">↺ Reset Weekly</button>
+  </div>
+</div>
+
+<!-- 🩺 PSORIASIS -->
+<div class="sec" id="sec-psori">
+  <div class="sec-lbl">Today's Skin Status</div>
+  <div class="flare-grid">
+    <button class="flare-btn" id="fl-clear" onclick="setFlare('clear')">
+      <div class="flare-emoji">😌</div>
+      <div class="flare-title">Clear</div>
+      <div class="flare-sub">No active patches</div>
+    </button>
+    <button class="flare-btn" id="fl-mild" onclick="setFlare('mild')">
+      <div class="flare-emoji">👃</div>
+      <div class="flare-title">Mild</div>
+      <div class="flare-sub">Slight nose/jaw</div>
+    </button>
+    <button class="flare-btn" id="fl-flare" onclick="setFlare('flare')">
+      <div class="flare-emoji">🔴</div>
+      <div class="flare-title">Flaring</div>
+      <div class="flare-sub">Active patches</div>
+    </button>
+    <button class="flare-btn" id="fl-improving" onclick="setFlare('improving')">
+      <div class="flare-emoji">📈</div>
+      <div class="flare-title">Improving</div>
+      <div class="flare-sub">Getting better</div>
+    </button>
+  </div>
+
+  <div class="sec-lbl">Treatment Protocol</div>
+  <div class="card">
+    <div class="card-title">💊 Desonide (Rx)</div>
+    <div class="card-sub">Topical corticosteroid — low potency, face-safe. Apply to active psoriasis patches on nose and jaw only. Last step before SPF in AM, last step before sleep in PM.</div>
+    <div class="card-meta">⚠️ Targeted use only — not full face</div>
+  </div>
+  <div class="card">
+    <div class="card-title">🧼 Sulfur Soap (targeted)</div>
+    <div class="card-sub">Per Dr. Kim: apply lather directly to psoriasis patches on nose/jaw. Primary use is body patches. Not a daily face cleanser.</div>
+    <div class="card-meta">pH 9.5 — targeted use only</div>
+  </div>
+  <div class="card">
+    <div class="card-title">🫧 Sheet Mask on Flare Days</div>
+    <div class="card-sub">Refrigerate mask before use for cooling, soothing effect. Calms active patches significantly.</div>
+  </div>
+
+  <div class="sec-lbl">Log a Note</div>
+  <div class="log-input-row">
+    <textarea id="psori-note" placeholder="How's the skin today? Any triggers, changes..."></textarea>
+    <button class="log-submit" onclick="logPsori()">Log</button>
+  </div>
+  <div id="psori-log"></div>
+</div>
+
+<!-- 🧴 PRODUCTS -->
+<div class="sec" id="sec-prod">
+  <div class="sec-lbl">CareCella Line — Basic Set</div>
+  <div id="prod-list"></div>
+</div>
+
+<!-- 🛒 BUY -->
+<div class="sec" id="sec-buy">
+  <div style="background:linear-gradient(135deg,#070d14,#0a1828);border:1px solid rgba(46,139,192,.2);border-top:2px solid #2e8bc0;border-radius:20px;padding:1.2rem;margin-bottom:.75rem;text-align:center">
+    <div style="font-size:32px;margin-bottom:.35rem">🇰🇷</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#2e8bc0;margin-bottom:.25rem">K-Beauty Arsenal</div>
+    <div style="font-size:11.5px;color:var(--tx3);line-height:1.5">Everything below is Korean. Tap any card to shop.</div>
+  </div>
+
+  <!-- SPF - PRIORITY -->
+  <div class="buy-rich-card" id="brc-0" style="border-color:rgba(46,139,192,.4)">
+    <div class="buy-rich-top">
+      <div class="buy-rich-check" onclick="toggleBuyRich(0)"></div>
+      <div class="buy-rich-badge" style="background:rgba(224,90,106,.15);color:#e05a6a;border-color:rgba(224,90,106,.3)">⚡ Priority #1</div>
+    </div>
+    <div class="buy-rich-icon">🌞</div>
+    <div class="buy-rich-name">Then I Met You<br>Essence Light Sunscreen</div>
+    <div class="buy-rich-detail">SPF 50 PA+++ · Broad Spectrum · 1.69 oz</div>
+    <div class="buy-rich-desc">Ferment-enriched, dewy finish. Ceramides + HA + Provitamin B5. No white cast. Your AM final step — daily, no matter the weather.</div>
+    <div class="buy-rich-tags">
+      <span class="buy-tag">🇰🇷 Korean</span>
+      <span class="buy-tag">No Fragrance</span>
+      <span class="buy-tag">Vegan</span>
+      <span class="buy-tag">Cruelty-Free</span>
+      <span class="buy-tag">No White Cast</span>
+    </div>
+    <div class="buy-rich-actions">
+      <a href="https://thenimetyou.com/products/essence-light-sunscreen-spf-50-pa" target="_blank" class="buy-action-btn buy-action-primary">Shop Brand Site →</a>
+      <a href="https://www.sephora.com/product/then-i-met-you-essence-light-sunscreen-broad-spectrum-moisturizer-spf-50-pa-P514198" target="_blank" class="buy-action-btn buy-action-sec">Sephora →</a>
+    </div>
+  </div>
+
+  <!-- DR GROOT SERUM -->
+  <div class="buy-rich-card" id="brc-1">
+    <div class="buy-rich-top">
+      <div class="buy-rich-check" onclick="toggleBuyRich(1)"></div>
+      <div class="buy-rich-badge" style="background:rgba(13,148,136,.15);color:#0d9488;border-color:rgba(13,148,136,.3)">💪 Hair Priority</div>
+    </div>
+    <div class="buy-rich-icon">💧</div>
+    <div class="buy-rich-name">Dr. Groot<br>Hair Thickening Serum</div>
+    <div class="buy-rich-detail">Roll-On · Metal tip · Scalp & Temples</div>
+    <div class="buy-rich-desc">Biotin + Rosemary + Salicylic Acid + Niacinamide + Caffeine + Ceramides + Retinol. Metal tip for precise temple and hairline application. Apply immediately after dermarolling.</div>
+    <div class="buy-rich-tags">
+      <span class="buy-tag">🇰🇷 Korean</span>
+      <span class="buy-tag">Post-Dermaroller</span>
+      <span class="buy-tag">Temples + Hairline</span>
+    </div>
+    <div class="buy-rich-actions">
+      <a href="https://www.amazon.com/s?k=dr+groot+hair+thickening+serum+roll+on" target="_blank" class="buy-action-btn buy-action-primary">Amazon →</a>
+    </div>
+  </div>
+
+  <!-- DR GROOT SCALP -->
+  <div class="buy-rich-card" id="brc-2">
+    <div class="buy-rich-top">
+      <div class="buy-rich-check" onclick="toggleBuyRich(2)"></div>
+      <div class="buy-rich-badge" style="background:rgba(13,148,136,.15);color:#0d9488;border-color:rgba(13,148,136,.3)">🔄 Non-Roller Days</div>
+    </div>
+    <div class="buy-rich-icon">🌿</div>
+    <div class="buy-rich-name">Dr. Groot<br>Scalp Detox Water</div>
+    <div class="buy-rich-detail">AHA + Rosemary · Scalp treatment</div>
+    <div class="buy-rich-desc">Use on days you don't dermaroll. AHA exfoliates scalp buildup, rosemary stimulates growth. Alternates with the serum in your weekly hair protocol.</div>
+    <div class="buy-rich-tags">
+      <span class="buy-tag">🇰🇷 Korean</span>
+      <span class="buy-tag">AHA</span>
+      <span class="buy-tag">Rosemary</span>
+    </div>
+    <div class="buy-rich-actions">
+      <a href="https://www.amazon.com/s?k=dr+groot+scalp+detox+water" target="_blank" class="buy-action-btn buy-action-primary">Amazon →</a>
+    </div>
+  </div>
+
+  <!-- ROSEMARY OIL -->
+  <div class="buy-rich-card" id="brc-3">
+    <div class="buy-rich-top">
+      <div class="buy-rich-check" onclick="toggleBuyRich(3)"></div>
+      <div class="buy-rich-badge" style="background:rgba(46,139,192,.12);color:#2e8bc0;border-color:rgba(46,139,192,.25)">🌱 Backup</div>
+    </div>
+    <div class="buy-rich-icon">🫙</div>
+    <div class="buy-rich-name">Pure Rosemary<br>Essential Oil</div>
+    <div class="buy-rich-detail">100% Pure · Undiluted</div>
+    <div class="buy-rich-desc">Backup post-roller treatment. Dilute 3–5 drops in jojoba or argan oil before applying to scalp. Do not apply undiluted.</div>
+    <div class="buy-rich-tags">
+      <span class="buy-tag">Dilute First</span>
+      <span class="buy-tag">3–5 drops</span>
+      <span class="buy-tag">In Jojoba or Argan</span>
+    </div>
+    <div class="buy-rich-actions">
+      <a href="https://www.amazon.com/s?k=pure+rosemary+essential+oil" target="_blank" class="buy-action-btn buy-action-primary">Amazon →</a>
+    </div>
+  </div>
+</div>
+
+<!-- 👨‍⚕️ DR KIM -->
+<div class="sec" id="sec-dr">
+  <div style="background:linear-gradient(160deg,#0a1f35,#0d2a45);border:1px solid #2e6a9e;border-radius:20px;padding:1.5rem 1.2rem;margin-bottom:.65rem;text-align:center">
+    <div style="width:64px;height:64px;border-radius:50%;background:#14325a;border:2px solid #5bb8e8;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto .85rem">🧑‍⚕️</div>
+    <div style="font-family:'DM Serif Display',serif;font-size:20px;color:#e8f4ff;font-weight:400;letter-spacing:-.2px">Dr. Hyung Kim</div>
+    <div style="font-size:12px;color:#5bb8e8;margin-top:.3rem;font-weight:600;letter-spacing:.04em">L.Ac. · Licensed Acupuncturist</div>
+    <div style="font-size:13px;color:#a8cce0;margin-top:.5rem">Kim's Acupuncture</div>
+    <div style="font-size:12px;color:#7aaac8;margin-top:.25rem;line-height:1.6">7215 Little River Turnpike<br>Annandale, VA 22003</div>
+    <div style="font-size:11px;color:#5a8aaa;margin-top:.4rem;line-height:1.5">Mon–Fri 9am–4pm · Sat 10am–1pm<br>Walk-ins welcome · Open 365 days · $85 first / $65 follow-up</div>
+    <div style="display:flex;gap:.5rem;margin-top:1rem;justify-content:center">
+      <a href="tel:7037509494" style="display:flex;align-items:center;gap:.4rem;padding:.7rem 1.3rem;border-radius:100px;font-size:13px;font-weight:700;background:#5bb8e8;color:#0a1f35;text-decoration:none;font-family:'DM Sans',sans-serif">📞 (703) 750-9494</a>
+      <a href="mailto:kimsacu@yahoo.com" style="display:flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;border-radius:100px;font-size:13px;font-weight:600;background:#14325a;border:1px solid #2e6a9e;color:#a8cce0;text-decoration:none;font-family:'DM Sans',sans-serif">✉️ Email</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-lbl" style="padding-top:0">Practice Info</div>
+    <div class="dr-info-row"><span class="dr-info-lbl">First visit</span><span class="dr-info-val">$85</span></div>
+    <div class="dr-info-row"><span class="dr-info-lbl">Follow-up</span><span class="dr-info-val">$65</span></div>
+    <div class="dr-info-row"><span class="dr-info-lbl">Appointments</span><span class="dr-info-val">Walk-in, no appt needed</span></div>
+    <div class="dr-info-row"><span class="dr-info-lbl">Also offers</span><span class="dr-info-val">Herbal remedies</span></div>
+    <div class="dr-info-row"><span class="dr-info-lbl">Psoriasis note</span><span class="dr-info-val">Sulfur soap on nose/jaw patches</span></div>
+  </div>
+
+  <div class="dr-note">
+    <div class="dr-note-lbl">My Notes</div>
+    <textarea id="dr-note-text" placeholder="Session notes, advice received, questions to ask...">Recommended sulfur soap lather directly on psoriasis patches (nose/jaw).</textarea>
+  </div>
+</div>
+
+<!-- MUSIC MODAL -->
+<div class="music-modal" id="music-modal" onclick="closeMusic(event)">
+  <div class="music-sheet" id="music-sheet">
+    <div class="music-close"></div>
+    <div class="music-sheet-title" id="music-title"></div>
+    <div class="music-sheet-sub" id="music-sub"></div>
+    <div id="music-list"></div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const AM_STEPS = [
+  {name:"Foam Cleanser",emoji:"🫧",ph:"pH 6.0",hint:"Warm then cold rinse",how:"Cleanse morning and evening. Gentle low-pH formula — the foundation of the routine.",keys:["Ginsenosides","Centella Asiatica","Prezatide Copper","Argan Oil","Green Tea"]},
+  {name:"Balance Toner",emoji:"💧",ph:"pH 7.5",hint:"Palm or cotton, sweep evenly",how:"After cleansing. Apply to palm or cotton pad, sweep evenly across face. Also use before sheet mask.",keys:["Niacinamide","Sodium Hyaluronate","Hydrolyzed Collagen","Adenosine","Ginsenosides"]},
+  {name:"Intensive Serum",emoji:"✨",ph:"pH 6.0",hint:"Dot center outward",how:"Dot onto cheeks, forehead, chin. Massage from center of face outward to absorb fully.",keys:["Hyaluronic Acid","Hydrolyzed Collagen","Allantoin","Panthenol","Prezatide Copper"]},
+  {name:"Apple K Serum",emoji:"🍎",ph:"pH 3.5",hint:"Dropper, apply evenly",how:"Triple Vitamin C serum. Apply dropper amount evenly. Refrigerate when not in use. Use within 2–3 months of opening.",keys:["Vitamin C (3x)","Ferulic Acid","Phloretin","Resveratrol","Nonapeptide-1","Fullerene"],warn:"Refrigerate after opening. Keep away from direct sunlight. Close cap tightly each use."},
+  {name:"Deep Emulsion",emoji:"🫙",ph:"pH 5.5",hint:"Circular motions",how:"Dot onto cheeks, forehead, chin. Massage into skin using circular motions.",keys:["Olive Oil","Shea Butter","Ceramide","Tranexamic Acid","Bifida Ferment","Ginsenosides"]},
+  {name:"Aqua Cream",emoji:"💦",ph:"pH 6.0",hint:"Face and neck",how:"Final moisturizer. Apply evenly over face and neck. Relieves psoriasis itching.",keys:["Triple HA","Ginseng Saponins","Trehalose","Panthenol","Adenosine","Sea Salt"]},
+  {name:"Eye Puff Cream",emoji:"👁️",ph:"—",hint:"Ring finger, tap gently",how:"Use ring finger only — lightest pressure. Tap gently around eye area, do not rub.",keys:["Peptides","HA","Caffeine-type actives"]},
+  {name:"Bio Mist",emoji:"🌿",ph:"pH 5.5",hint:"8–10 inches away, pat in",how:"Hold 8–10 inches from face. Mist evenly. Pat gently to absorb. 2–3 mists is plenty. Can use anytime for hydration.",keys:["EGF Peptides","Ginseng Callus","Vitamin C","Copper Tripeptide-1","Triple HA"]},
+  {name:"Desonide (Rx)",emoji:"💊",ph:"Rx",hint:"Flare days — nose/jaw patches only",how:"Apply to active psoriasis patches on nose and jaw only. Not for full face. Last step before SPF.",keys:["Prescription topical corticosteroid"],warn:"Targeted use only. Not a full-face product."},
+  {name:"SPF 50 PA+++",emoji:"🌞",ph:"—",hint:"FINAL STEP — to be purchased",how:"Then I Met You Essence Light Sunscreen. Final step every morning. Purchase at thenimetyou.com.",keys:["SPF 50","PA+++"],warn:"Still to purchase — thenimetyou.com"},
+];
+
+const PM_STEPS = [
+  {name:"Foam Cleanser",emoji:"🫧",ph:"pH 6.0",hint:"Warm then cold rinse",how:"Cleanse morning and evening. Full face cleanse to remove day's buildup.",keys:["Ginsenosides","Centella Asiatica","Prezatide Copper","Argan Oil"]},
+  {name:"Balance Toner",emoji:"💧",ph:"pH 7.5",hint:"Sweep evenly",how:"After cleansing. Apply to palm or cotton pad, sweep evenly across face.",keys:["Niacinamide","Sodium Hyaluronate","Hydrolyzed Collagen","Adenosine"]},
+  {name:"Intensive Serum",emoji:"✨",ph:"pH 6.0",hint:"Dot center outward",how:"Dot onto cheeks, forehead, chin. Massage from center outward.",keys:["Hyaluronic Acid","Hydrolyzed Collagen","Allantoin","Panthenol"]},
+  {name:"Bubble TocToc",emoji:"🫧",ph:"pH 7.0",hint:"Let bubbles form — don't rush",how:"Apply layer to face/neck. DO NOT massage immediately. Let bubbles form fully until they depreciate to 1/3. Pat remaining product. Then massage 1–2 min using zone technique: cheeks upward spiral → mouth corners lift → nose tip upward → undereyes inner to outer → forehead center to outer.",keys:["Volufiline","5-Peptide Complex","Ceramides","Ginsenosides","Centella Asiatica"],warn:"⚠️ Do NOT use on sensitive/broken skin. Dry skin: max 1–2x per week."},
+  {name:"Deep Emulsion",emoji:"🫙",ph:"pH 5.5",hint:"Circular motions",how:"Dot onto cheeks, forehead, chin. Massage in circular motions.",keys:["Olive Oil","Shea Butter","Ceramide","Tranexamic Acid","Bifida Ferment"]},
+  {name:"Aqua Cream",emoji:"💦",ph:"pH 6.0",hint:"Face and neck",how:"Apply evenly over face and neck. Niacinamide fades PIH overnight.",keys:["Triple HA","Ginseng Saponins","Trehalose","Niacinamide"]},
+  {name:"Eye Puff Cream",emoji:"👁️",ph:"—",hint:"Ring finger, tap gently",how:"Ring finger only — tap gently around eye area.",keys:["Peptides","HA"]},
+  {name:"CK Mist",emoji:"🌸",ph:"—",hint:"15–20cm away, eyes closed",how:"Spray 15–20cm from face, eyes closed. Pat gently to absorb. Seal step — ginseng mist locks everything in.",keys:["10,000ppm Ginseng","Triple HA","Ginseng Callus Extract","Panthenol"]},
+  {name:"Bio Mist",emoji:"🌿",ph:"pH 5.5",hint:"8–10 inches away, pat in",how:"Final mist layer. Hold 8–10 inches away. 2–3 mists. Pat gently.",keys:["EGF Peptides","Ginseng Callus","Vitamin C","Copper Tripeptide-1"]},
+  {name:"Desonide (Rx)",emoji:"💊",ph:"Rx",hint:"Flare days — nose/jaw only",how:"Apply to active psoriasis patches on nose and jaw only. Absolute last step before sleep.",keys:["Prescription topical corticosteroid"],warn:"Targeted use only. Not for full face."},
+];
+
+const SCRUB_STEPS = [
+  {name:"Start DRY — no water yet",emoji:"⚠️",hint:"Do NOT wet face first",how:"Most important rule. The scrub particles only form on completely dry skin. Don't cleanse first, don't splash water. Completely dry."},
+  {name:"Apply Scrub to Dry Face",emoji:"🧴",hint:"Leave 1–2 min, don't rub yet",how:"Apply the peeling gel to your dry face. Leave on for 1–2 minutes. Do not rub yet — let it sit."},
+  {name:"Rub Gently — Particles Form",emoji:"✋",hint:"Feel the exfoliation happening",how:"Now gently rub in circular motions. The product transforms into exfoliating particles as you massage. Focus on nose and jaw psoriasis patches and any rough areas."},
+  {name:"Rinse Thoroughly",emoji:"💧",hint:"Clean slate, ready for mask",how:"Rinse all scrub particles off completely with water. Pat dry gently."},
+  {name:"Apply Sheet Mask",emoji:"🫧",hint:"20–30 minutes",how:"Apply the refrigerated sheet mask. Smooth it flat, remove air bubbles. Leave on 20–30 minutes. Relax — put on your evening playlist."},
+  {name:"Pat Remaining Essence",emoji:"👐",hint:"Do not rinse — press it in",how:"Remove mask and pat all remaining essence into skin using gentle pressing motions. Don't waste a drop. Now continue with your full PM routine: Balance Toner → Intensive Serum → TocToc → Deep Emulsion → Aqua Cream → Eye Cream → CK Mist → Bio Mist."},
+];
+
+const MASK_STEPS = []; // merged into scrub flow
+
+const PRODUCTS = [
+  {emoji:"🫧",name:"Foam Cleanser",sub:"Basic Set · 100mL",ph:"pH 6.0",how:"AM + PM cleanse. Low pH, gentle formula.",keys:["Ginsenosides","Centella Asiatica","Prezatide Copper","Argan Oil","Green Tea","Hibiscus","Licorice Root"],inci:"Water, Disodium Cocoamphodiacetate, Sodium Chloride, Tartaric Acid, Coco Glucoside, Levulinic Acid, Hexylene Glycol, Lavender Oil, Glycerin, Glycine Soja Phytoplacenta Extract, Butylene Glycol, Aloe Barbadensis Leaf Juice, Propanediol, Ginsenosides, Glycyrrhiza Glabra Root Extract, Camellia Sinensis Leaf Extract, Centella Asiatica Extract, Urtica Dioica Extract, 1,2-Hexanediol, Argan Oil, Hibiscus Sabdariffa Flower Extract, Zanthoxylum Piperitum Fruit Pulp Extract, Anemone Cernua Extract, Usnea Barbata Extract, Polyglyceryl-10 Laurate, Caprylyl Glycol, Prezatide Copper"},
+  {emoji:"💧",name:"Balance Toner",sub:"Basic Set · 120mL",ph:"pH 7.5",how:"After cleansing. Palm or cotton pad, sweep evenly. Also use before sheet mask.",keys:["Niacinamide","Sodium Hyaluronate","Ginsenosides","Hydrolyzed Collagen","Adenosine","Argan Oil"],inci:"Water, Methylpropanediol, Niacinamide, Isopentyldiol, Dipropylene Glycol, Sorbitol, Hydroxyacetophenone, Hyaluronate Sodium, Glycereth-25 PCA Isostearate, Glycine Soja Phytoplacenta Extract, Caprylyl Glycol, Butylene Glycol, Adenosine, Lavender Oil, Hydrolyzed Collagen, Ginsenosides, Argan Oil"},
+  {emoji:"✨",name:"Intensive Serum",sub:"Basic Set · 50mL",ph:"pH 6.0",how:"Dot cheeks/forehead/chin. Massage center outward.",keys:["HA","Hydrolyzed Collagen","Allantoin","Panthenol","Ginsenosides","Tripeptide-3","Prezatide Copper","Centella Asiatica"],inci:"Water, Glycerin, Methylpropanediol, Niacinamide, Dipropylene Glycol, Isopentyldiol, Sorbitol, Glycine Soja Phytoplacenta Extract, Butylene Glycol, Hydroxyacetophenone, Carboxypolymethylene, Tromethamine, Hydrolyzed Collagen, Allantoin, Glycereth-25 PCA Isostearate, Caprylyl Glycol, Aloe Barbadensis Leaf Juice, Adenosine, Propanediol, Lavender Oil, Hyaluronate Sodium, Ginsenosides, Panthenol, Centella Asiatica Extract, 1,2-Hexanediol, Arginine, Tripeptide-3, Acetyl Hexapeptide-8, Hexapeptide-9, Prezatide, Zanthoxylum Piperitum Fruit Pulp Extract, Anemone Cernua Extract, Usnea Barbata Extract, Argan Oil"},
+  {emoji:"🍎",name:"Apple K Serum",sub:"Vitamin C · Dropper",ph:"pH 3.5",how:"AM only (step 4). Refrigerate. Use within 2–3 months.",keys:["Triple Vitamin C","Ferulic Acid","Phloretin","Resveratrol","Glutathione","Nonapeptide-1","Fullerene (C60)"],warn:"Refrigerate after opening. Use within 2–3 months. Close cap tightly.",inci:"Purified Water, Propanediol, Ascorbic Acid, Butylene Glycol, 1,2-Hexanediol, Ascorbyl Glucoside, Tromethamine, Ferulic Acid, Sodium Citrate, Apple Extract, Ectoin, Isopentyldiol, Xanthan Gum, 3-O-Ethyl Ascorbic Acid, Acetyl Glucosamine, Glutathione, Allantoin, Resveratrol, Glyceryl-25 PCA Isostearate, Tetrasodium EDTA, Polyglyceryl-4 Oleate, Vinegar, Palm Oil, Tocotrienol, Phloretin, Sodium Serpentine, Beta-Glucan, PVP, Indian Mulberry Flower Extract, Holy Basil Leaf Extract, Indian Mulberry Leaf Extract, Tocopherol, Vanilla Fruit Extract, Moringa Leaf Extract, Cabbage Extract, Peach Extract, Turmeric Root Extract, Apricot Extract, Sea Buckthorn Extract, Sodium Stearoyl Glutamate, Western Red Pine Leaf/Stem Extract, Nonapeptide-1, Ethylhexylglycerin, Fullerene"},
+  {emoji:"🫙",name:"Deep Emulsion",sub:"Basic Set · 120mL",ph:"pH 5.5",how:"After serums. Dot cheeks/forehead/chin. Circular motions.",keys:["Olive Oil","Jojoba","Shea Butter","Moringa","Ceramide","Bifida Ferment","Tranexamic Acid","Lactobacillus"],inci:"Water, Olea Europaea Fruit Oil, Butylene Glycol, Niacinamide, Isopentyldiol, Simmondsia Chinensis Seed Oil, Sorbitol, Dipropylene Glycol, Glycerin, Diglycerin, Moringa Oleifera Seed Oil, Limnanthes Alba Seed Oil, Vitis Vinifera Seed Oil, Butyrospermum Parkii Shea Butter, Glycereth-25 PCA Isostearate, Glycine Soja Phytoplacenta Extract, Stearyl Alcohol, Hydroxyacetophenone, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Tromethamine, Tocopherol, Caprylyl Glycol, Tetrasodium EDTA, Lavandula Angustifolia Oil, Adenosine, Glucosyl Ceramide, Helianthus Annuus Seed Oil, Levan, Sodium Hyaluronate, 1,2-Hexanediol, Phospholipids, Glyceryl Acrylate/Acrylic Acid Copolymer, Lactobacillus/Collagen Ferment Filtrate, Ginsenosides, Bifida Ferment Lysate, Lactobacillus/Lemon Peel Ferment Extract, Citrus Aurantium Dulcis Peel Extract, Cholesterol, Ethylhexylglycerin, Arginine, Hexapeptide-9, Tranexamic Acid, Tripeptide-29, Acetyl Hexapeptide-8, Nicotinoyl Tripeptide-1, Tranexamoyl Dipeptide-22, Nicotinoyl Dipeptide-22, Tripeptide-1"},
+  {emoji:"💦",name:"Aqua Cream",sub:"Basic Set · 100mL",ph:"pH 6.0",how:"Final moisturizer. Face and neck. Soothes psoriasis itching.",keys:["Triple HA","Ginseng Saponins","Ginsenosides","Trehalose","Panthenol","Niacinamide","Sea Salt"],inci:"Water, Olea Europaea Fruit Oil, Butylene Glycol, Isopentyldiol, Niacinamide, Caprylic/Capric Triglyceride, Sorbitol, Sodium Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Dipropylene Glycol, 1,2-Hexanediol, Polyisobutene, Trehalose, Lactobacillus/Collagen Ferment Filtrate, Hydroxyacetophenone, Carbomer, Tromethamine, Caprylyl/Capryl Glucoside, Sorbitan Oleate, Panthenol, Tetrasodium EDTA, Allantoin, Lavandula Angustifolia Oil, Adenosine, Caprylyl Glycol, Sodium Hyaluronate, Hydrolyzed Ginseng Saponins, Ginsenosides, Hexyl Aminolevulinate HCl, Sea Salt, Arginine, Tripeptide-29, Acetyl Hexapeptide-8, Hexapeptide-9, Nicotinoyl Tripeptide-1"},
+  {emoji:"🌿",name:"Bio Mist",sub:"All In One · 95mL",ph:"pH 5.5",how:"Hold 8–10 inches away. 2–3 mists. Pat gently. AM & PM last mist step.",keys:["EGF Peptides (sh-Oligopeptide-1/-2)","Ginseng Callus Extract","Vitamin C (stable)","Copper Tripeptide-1","Triple HA","Centella Asiatica"],inci:"Water, Glycerin, Dipropylene Glycol, Diglycerin, Niacinamide, 1,2-Hexanediol, Butylene Glycol, C12-14 Sec-Pareth-7, Allantoin, Panax Ginseng Callus Culture Extract, Glycine Soja Phytoplacenta Extract, Adenosine, Lactobacillus/Collagen Ferment Filtrate, Polyglyceryl-10 Laurate, Lavandula Angustifolia Oil, Caprylyl Glycol, Lactobacillus/Lemon Peel Ferment Extract, Citrus Aurantium Dulcis Peel Extract, Aloe Barbadensis Leaf Juice, Propanediol, Copper Tripeptide-1, Arginine, Sodium Hyaluronate, Hexapeptide-9, Tripeptide-29, Acetyl Hexapeptide-8, Nicotinoyl Tripeptide-1, Camellia Sinensis Leaf Extract, Urtica Dioica Extract, Glycyrrhiza Glabra Root Extract, Centella Asiatica Extract, 3-O-Ethyl Ascorbic Acid, Ethylhexylglycerin, Sodium Phosphate, Hydrogenated Lecithin, Hydrolyzed Ginseng Saponins, Zanthoxylum Piperitum Fruit Extract, Pulsatilla Koreana Extract, Usnea Barbata Extract, sh-Oligopeptide-1, sh-Polypeptide-1, sh-Oligopeptide-2, sh-Polypeptide-9, sh-Polypeptide-22"},
+  {emoji:"🌸",name:"CK Mist",sub:"Ginseng Mist · 95mL",ph:"—",how:"PM seal step. Spray 15–20cm away, eyes closed. Pat gently.",keys:["10,000ppm Ginseng (MEBT)","Ginseng Callus Extract","Triple HA","Panthenol","Allantoin"],inci:"Purified water, butylene glycol, dipropylene glycol, glycerin, ginseng extract, hydroxyacetophenone, diethylhexyl syringylidenemalonate, panthenol, caprylyl glycol, allantoin, 1,2-hexanediol, ginseng callus culture extract, sodium hyaluronate, hydrolyzed ginsenosides, hydrolyzed hyaluronic acid, sodium acetylated hyaluronate, ethylhexylglycerin"},
+  {emoji:"💫",name:"Bubble TocToc",sub:"Firming Serum · 120mL",ph:"pH 7.0",how:"PM only (step 4). Apply layer, wait for bubbles to form to 1/3, pat then massage 1–2 min with zone technique.",keys:["Volufiline (firming)","5-Peptide Complex","Ceramides","Ginsenosides","Centella Asiatica","Shea Butter"],warn:"⚠️ Do NOT use on sensitive or broken skin. Dry skin: 1–2x per week max.",inci:"Water, Butylene Glycol, Methyl Perfluoroisobutyl Ether, Olea Europaea Fruit Oil, Hydrogenated Polybutene, Glycerin, Diglycerin, Dipropylene Glycol, Niacinamide, Jojoba Seed Oil, Shea Butter, 1,2-Hexanediol, Soybean Phytoplacenta Extract, Stearyl Alcohol, Meglumine, Hydrolyzed Collagen, Polyglyceryl-10 Oleate, Acrylates Crosspolymer, Lauryl Betaine, Chlorphenesin, C12-14 Sec-Pareth-7, Sodium Chloride, Polyglyceryl-10 Laurate, Edetate Sodium, Adenosine, Glucosyl Ceramide, Caprylyl Glycol, Hydroxyethyl Cellulose, Hyaluronate Sodium, Lavender Oil, Lecithin, Ginsenosides, Prezatide Copper, Arginine, Inula Britannica Flower/Leaf/Stem Extract, Aloe Vera Leaf Juice, Propanediol, Anemarrhena Asphodeloides Root Extract, Tripeptide-29, Acetyl Hexapeptide-8, Hexapeptide-9, Nicotinoyl Tripeptide-1, Cholesterol, Centella Asiatica Extract, Green Tea Leaf Extract, Glycyrrhiza Glabra Root Extract, Urtica Dioica Extract"},
+  {emoji:"🧴",name:"Scrub",sub:"Peeling Gel · Dry skin only",ph:"pH 5.8",how:"Apply to DRY skin before cleansing. Leave 1–2 min. Rub gently — particles form. Rinse.",keys:["Betaine Salicylate (BHA)","Fullerene (C60)","Rosa Damascena","Hydrolyzed Collagen","HA","Sea Buckthorn","Willow Bark"],warn:"⚠️ Apply to DRY skin only — particles will not form on wet skin.",inci:"Water, Methylpropanediol, Arginine, Carboxypolymethylene, Dipropylene Glycol, Hydrolyzed Collagen, Hydroxyacetophenone, Aloe Barbadensis Leaf Powder, C12-14 Sec-Pareth-7, Betaine Salicylate, Caprylyl Glycol, Butylene Glycol, Glycerin, Aloe Barbadensis Leaf Juice, Propanediol, Rosa X Damascena Flower Oil, 1,2-Hexanediol, Citric Acid Monohydrate, Hyaluronate Sodium, Centella Asiatica Extract, Glycyrrhiza Glabra Root Extract, Urtica Dioica Extract, Camellia Sinensis Leaf Extract, Salix Alba Bark Extract, Morus Alba Bark Extract, Hippophae Rhamnoides Fruit Extract, Zanthoxylum Piperitum Fruit Pulp Extract, Anemone Cernua Extract, Usnea Barbata Extract, PVP, Buckminsterfullerene"},
+  {emoji:"🫧",name:"Hydra Soothing Mask",sub:"Sheet Mask · 5 masks",ph:"—",how:"After cleanser + toner. 15–20 min. Pat remaining essence in. Refrigerate first if psoriasis active.",keys:["Sodium Hyaluronate","Panthenol","Hydrolyzed Collagen","Aloe Vera","Honey Extract","Centella Asiatica","Beta-Glucan"],inci:"Water, Dipropylene Glycol, Glycerin, 1,2-Hexanediol, Hyaluronate Sodium, Panthenol, Hydrolyzed Collagen, Aloe Vera Leaf Water, Butylene Glycol, Honey Extract, Centella Asiatica Extract, Betaine, Bemisiose, Hydrogenated Starch Hydrolysate, Allantoin, Xanthan Gum, Hydroxyethyl Cellulose, Tromethamine, Ethylhexylglycerin, Edetate Disodium, Beta-Glucan"},
+];
+
+const BUY_ITEMS = [
+  {name:"Then I Met You Essence Light Sunscreen SPF 50 PA+++",sub:"🇰🇷 Korean · Final AM step · thenimetyou.com",link:"https://thenimetyou.com",linkText:"Shop"},
+  {name:"Dr. Groot Hair Thickening Serum (Roll-On)",sub:"🇰🇷 Korean · Apply immediately after dermarolling · Amazon",link:"https://amazon.com/s?k=dr+groot+hair+thickening+serum",linkText:"Amazon"},
+  {name:"Dr. Groot Scalp Detox Water",sub:"🇰🇷 Korean · AHA + Rosemary · Non-roller days · Amazon",link:"https://amazon.com/s?k=dr+groot+scalp+detox+water",linkText:"Amazon"},
+  {name:"Pure Rosemary Essential Oil",sub:"Dilute 3–5 drops in jojoba/argan · Backup post-roller",link:"https://amazon.com/s?k=pure+rosemary+essential+oil",linkText:"Amazon"},
+];
+
+const AM_PLAYLIST = [
+  {name:"GODS (League of Legends)",artist:"NewJeans",url:"https://youtube.com/results?search_query=NewJeans+GODS"},
+  {name:"Hype Boy",artist:"NewJeans",url:"https://youtube.com/results?search_query=NewJeans+Hype+Boy"},
+  {name:"Ditto",artist:"NewJeans",url:"https://youtube.com/results?search_query=NewJeans+Ditto"},
+  {name:"ANTIFRAGILE",artist:"LE SSERAFIM",url:"https://youtube.com/results?search_query=LE+SSERAFIM+ANTIFRAGILE"},
+  {name:"FEARLESS",artist:"LE SSERAFIM",url:"https://youtube.com/results?search_query=LE+SSERAFIM+FEARLESS"},
+  {name:"Attention",artist:"NMIXX",url:"https://youtube.com/results?search_query=NMIXX+Attention"},
+  {name:"After LIKE",artist:"IVE",url:"https://youtube.com/results?search_query=IVE+After+LIKE"},
+  {name:"Kitsch",artist:"IVE",url:"https://youtube.com/results?search_query=IVE+Kitsch"},
+];
+
+const PM_PLAYLIST = [
+  {name:"산책 (A Walk)",artist:"Heize",url:"https://youtube.com/results?search_query=Heize+산책+a+walk"},
+  {name:"밤편지 (Through the Night)",artist:"IU",url:"https://youtube.com/results?search_query=IU+밤편지+through+the+night"},
+  {name:"Palette",artist:"IU ft. G-Dragon",url:"https://youtube.com/results?search_query=IU+Palette+G-Dragon"},
+  {name:"겨울잠 (Hibernation)",artist:"Akdong Musician",url:"https://youtube.com/results?search_query=Akdong+Musician+겨울잠"},
+  {name:"Korean Traditional Gayageum",artist:"Instrumental · Ambient",url:"https://youtube.com/results?search_query=korean+gayageum+ambient+meditation"},
+  {name:"Haegeum & Daegeum Night",artist:"Traditional Korean · Chill",url:"https://youtube.com/results?search_query=haegeum+daegeum+korean+traditional+chill"},
+  {name:"조선시대 야경 (Joseon Night Ambience)",artist:"Historical Korean Music",url:"https://youtube.com/results?search_query=조선시대+야경+음악+korean+historical+ambient"},
+  {name:"Korean Temple Bell Meditation",artist:"Ancient Oriental · Sleep",url:"https://youtube.com/results?search_query=korean+temple+bell+meditation+music"},
+];
+
+// ─── STATE ───────────────────────────────────────────────
+let amDone = new Set();
+let pmDone = new Set();
+let scrubDone = new Set();
+let maskDone = new Set();
+let psoriLog = [];
+let currentFlare = null;
+
+// ─── RENDER STEPS ────────────────────────────────────────
+function renderSteps(containerId, steps, doneSet, prefix) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = steps.map((s,i) => `
+    <div class="step${doneSet.has(i)?' done':''}" id="${prefix}-step-${i}">
+      <div class="step-header" onclick="toggleStep('${prefix}',${i},${steps.length})">
+        <div class="step-num">${doneSet.has(i)?'✓':(i+1)}</div>
+        <div class="step-info">
+          <div class="step-name">${s.emoji} ${s.name}</div>
+          <div class="step-hint">${s.hint}</div>
+        </div>
+        ${s.ph && s.ph!=='—'?`<div class="step-ph">${s.ph}</div>`:''}
+        <div class="step-chevron">▾</div>
+      </div>
+      <div class="step-body">
+        <p>${s.how}</p>
+        ${s.warn?`<p class="warn">⚠️ ${s.warn}</p>`:''}
+        ${s.keys?`<div class="keys">${s.keys.map(k=>`<span class="key">${k}</span>`).join('')}</div>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleStep(prefix, idx, total) {
+  const el = document.getElementById(`${prefix}-step-${idx}`);
+  const isOpen = el.classList.contains('open');
+
+  // close all
+  for(let i=0;i<total;i++){
+    const s = document.getElementById(`${prefix}-step-${i}`);
+    if(s) s.classList.remove('open');
+  }
+
+  if(!isOpen) {
+    el.classList.add('open');
+  } else {
+    // tap again = mark done
+    const doneSet = prefix==='am'?amDone:prefix==='pm'?pmDone:prefix==='scrub'?scrubDone:maskDone;
+    if(doneSet.has(idx)) doneSet.delete(idx);
+    else doneSet.add(idx);
+    const steps = prefix==='am'?AM_STEPS:prefix==='pm'?PM_STEPS:prefix==='scrub'?SCRUB_STEPS:MASK_STEPS;
+    renderSteps(prefix==='am'?'am-steps':prefix==='pm'?'pm-steps':prefix==='scrub'?'scrub-steps':'mask-steps', steps, doneSet, prefix);
+  }
+}
+
+function resetSteps(prefix) {
+  if(prefix==='am'){amDone.clear();renderSteps('am-steps',AM_STEPS,amDone,'am');}
+  else if(prefix==='pm'){pmDone.clear();renderSteps('pm-steps',PM_STEPS,pmDone,'pm');}
+  else if(prefix==='scrub'){scrubDone.clear();renderSteps('scrub-steps',SCRUB_STEPS,scrubDone,'scrub');}
+  else{maskDone.clear();renderSteps('mask-steps',MASK_STEPS,maskDone,'mask');}
+}
+
+// ─── WEEKLY ─────────────────────────────────────────────
+function showWeek(which, btn) {} // merged into single flow
+
+// ─── PSORIASIS ───────────────────────────────────────────
+function setFlare(status) {
+  currentFlare = status;
+  document.querySelectorAll('.flare-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('fl-'+status).classList.add('active');
+}
+
+function logPsori() {
+  const note = document.getElementById('psori-note').value.trim();
+  if(!note && !currentFlare) return;
+  const entry = {
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    status: currentFlare || 'unspecified',
+    note: note
+  };
+  psoriLog.unshift(entry);
+  document.getElementById('psori-note').value = '';
+  renderPsoriLog();
+}
+
+function renderPsoriLog() {
+  const el = document.getElementById('psori-log');
+  if(!psoriLog.length){el.innerHTML='';return;}
+  el.innerHTML = psoriLog.slice(0,10).map(e=>`
+    <div class="log-entry">
+      <div>
+        <div class="log-status">${e.status.charAt(0).toUpperCase()+e.status.slice(1)}${e.note?' — '+e.note:''}</div>
+        <div class="log-date">${e.date}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── PRODUCTS ────────────────────────────────────────────
+function renderProducts() {
+  const el = document.getElementById('prod-list');
+  el.innerHTML = PRODUCTS.map((p,i)=>`
+    <div class="prod-card" id="prod-${i}">
+      <div class="prod-header" onclick="toggleProd(${i})">
+        <div class="prod-emoji">${p.emoji}</div>
+        <div class="prod-info">
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-sub">${p.sub}</div>
+        </div>
+        ${p.ph&&p.ph!=='—'?`<div class="prod-ph-badge">${p.ph}</div>`:''}
+        <div class="prod-chevron">▾</div>
+      </div>
+      <div class="prod-body">
+        <p>${p.how}</p>
+        ${p.warn?`<p class="warn">⚠️ ${p.warn}</p>`:''}
+        <div class="ing-grid">${p.keys.map(k=>`<span class="ing-tag">${k}</span>`).join('')}</div>
+        <div class="inci"><strong style="color:var(--tx2);font-size:10px">INCI:</strong> ${p.inci}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleProd(i) {
+  const el = document.getElementById('prod-'+i);
+  el.classList.toggle('open');
+}
+
+// ─── BUY ─────────────────────────────────────────────────
+function renderBuy() {} // rich cards are static HTML now
+
+function toggleBuyRich(i) {
+  const card = document.getElementById('brc-'+i);
+  const check = card.querySelector('.buy-rich-check');
+  const isBought = card.classList.toggle('bought');
+  check.textContent = isBought ? '✓' : '';
+}
+
+// ─── MUSIC ───────────────────────────────────────────────
+function openMusic(type) {
+  const modal = document.getElementById('music-modal');
+  const title = document.getElementById('music-title');
+  const sub = document.getElementById('music-sub');
+  const list = document.getElementById('music-list');
+  const playlist = type==='am' ? AM_PLAYLIST : PM_PLAYLIST;
+
+  title.textContent = type==='am' ? '☀️ Morning Playlist' : '🌙 Evening Playlist';
+  title.style.color = type==='am' ? 'var(--gold)' : '#7a8ec9';
+  sub.textContent = type==='am'
+    ? 'Upbeat K-pop to energize your morning glow ritual'
+    : 'Chill K-indie + ancient Korean instrumental for your evening wind-down';
+
+  list.innerHTML = playlist.map((t,i)=>`
+    <a class="playlist-item" href="${t.url}" target="_blank">
+      <div class="playlist-num">${i+1}</div>
+      <div class="playlist-info">
+        <div class="playlist-name">${t.name}</div>
+        <div class="playlist-artist">${t.artist}</div>
+      </div>
+      <div class="playlist-play">▶️</div>
+    </a>
+  `).join('');
+
+  modal.classList.add('open');
+}
+
+function closeMusic(e) {
+  if(e.target===document.getElementById('music-modal')) {
+    document.getElementById('music-modal').classList.remove('open');
+  }
+}
+
+// ─── NAV ─────────────────────────────────────────────────
+const ACTIVE_CLASSES = {
+  'sec-am':'active-am','sec-pm':'active-pm','sec-week':'active-week',
+  'sec-psori':'active-psori','sec-prod':'active-prod','sec-buy':'active-buy','sec-dr':'active-dr'
+};
+
+const ACTIVE_COLOR = {
+  'sec-am':'p-active-blue','sec-pm':'p-active-blue','sec-week':'p-active-teal',
+  'sec-psori':'p-active-red','sec-prod':'p-active-blue','sec-buy':'p-active-blue','sec-dr':'p-active-teal'
+};
+
+function showSec(id, btn, type) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p=>{
+    Object.values(ACTIVE_CLASSES).forEach(c=>p.classList.remove(c));
+    Object.values(ACTIVE_COLOR).forEach(c=>p.classList.remove(c));
+  });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add(ACTIVE_CLASSES[id]);
+  btn.classList.add(ACTIVE_COLOR[id]);
+  applyPillTheme();
+}
+
+// ─── THEME ───────────────────────────────────────────────
+function getTheme(){return document.documentElement.getAttribute('data-theme')}
+
+function applyPillTheme(){
+  const dark = getTheme()==='dark';
+  const nav = document.querySelector('.nav-wrap');
+  nav.classList.toggle('nav-dark', dark);
+  nav.classList.toggle('nav-light', !dark);
+  document.querySelectorAll('.pill').forEach(p=>{
+    const isActive = [...p.classList].some(c=>c.startsWith('active-'));
+    p.classList.remove('p-inactive-dark','p-inactive-light');
+    if(!isActive) p.classList.add(dark?'p-inactive-dark':'p-inactive-light');
+  });
+}
+
+function toggleTheme() {
+  const isDark = getTheme()==='dark';
+  document.documentElement.setAttribute('data-theme', isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent = isDark?'🌙':'☀️';
+  applyPillTheme();
+}
+
+// ─── INIT ────────────────────────────────────────────────
+renderSteps('am-steps', AM_STEPS, amDone, 'am');
+renderSteps('pm-steps', PM_STEPS, pmDone, 'pm');
+renderSteps('scrub-steps', SCRUB_STEPS, scrubDone, 'scrub');
+// mask merged into scrub steps
+renderProducts();
+
+// activate first tab
+const firstPill = document.querySelector('[data-sec="sec-am"]');
+firstPill.classList.add('active-am');
+firstPill.classList.add('p-active-blue');
+applyPillTheme();
+</script>
+</body>
+</html>
